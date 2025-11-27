@@ -19,3 +19,7 @@ dist
 temp
 .env
 images
+
+request.log
+error.log
+logs/

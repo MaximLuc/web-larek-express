@@ -2,16 +2,16 @@ import mongoose from 'mongoose';
 
 const productSchema = new mongoose.Schema({
   title: {
-    type: String, minlength: 2, maxlength: 100, required: true, unique: true,
+    type: String, minlength: [2, 'Минимальная длина поля "title" - 2'], maxlength: [30, 'Максимальная длина поля "title" - 30'], required: [true, 'Поле "title" обязательно для заполнения'], unique: true,
   },
   image: {
     type: {
-      fileName: { type: String, required: true },
-      originalName: { type: String, required: true },
+      fileName: { type: String, required: [true, 'Поле "image.fileName" должно быть заполнено'] },
+      originalName: { type: String, required: [true, 'Поле "image.originalName" должно быть заполнено'] },
     },
-    required: true,
+    required: [true, 'Поле "image" должно быть заполнено'],
   },
-  category: { type: String, required: true },
+  category: { type: String, required: [true, 'Поле "category" должно быть заполнено'] },
   description: { type: String },
   price: { type: Number, default: null },
 });
