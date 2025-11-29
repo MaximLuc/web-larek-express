@@ -19,5 +19,3 @@ dist
 temp
 .env
 
-*.png
-*.svg

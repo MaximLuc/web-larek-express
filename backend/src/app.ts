@@ -7,8 +7,8 @@ import NotFoundError from './errors/not-found-error';
 import errorHandler from './middlewares/error-handler';
 import routes from './routes/index';
 import { errorLogger, requestLogger } from './middlewares/logger';
+import { PORT, MONGO_URL } from './config';
 
-const MONGO_URL = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/weblarek';
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -27,12 +27,15 @@ app.use(celebrateErrors());
 app.use(errorHandler);
 mongoose.connect(MONGO_URL)
   .then(() => {
+    // eslint-disable-next-line no-console
     console.log('Mongo connected');
-    app.listen(3000, () => {
-      console.log(`Server is running on port ${3000}`);
+    app.listen(PORT, () => {
+      // eslint-disable-next-line no-console
+      console.log(`Server is running on port ${PORT}`);
     });
   })
   .catch((err) => {
+    // eslint-disable-next-line no-console
     console.error('Mongo connection error', err);
     process.exit(1);
   });
