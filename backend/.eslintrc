@@ -34,11 +34,7 @@
     "import/no-extraneous-dependencies": [
       "error",
       {
-        "packageDir": ["./backend", "./"],
-        "devDependencies": [
-          "**/*.test.ts",
-          "**/*.spec.ts"
-        ]
+        "devDependencies": ["**/*.test.ts", "**/*.spec.ts"]
       }
     ],
 
