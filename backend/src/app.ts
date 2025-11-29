@@ -7,8 +7,8 @@ import NotFoundError from './errors/not-found-error';
 import errorHandler from './middlewares/error-handler';
 import routes from './routes/index';
 import { errorLogger, requestLogger } from './middlewares/logger';
-import { PORT, MONGO_URL } from './config';
 
+const { PORT = 3000, MONGO_URL = 'mongodb://127.0.0.1:27017/weblarek' } = process.env;
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -31,11 +31,15 @@ mongoose.connect(MONGO_URL)
     console.log('Mongo connected');
     app.listen(PORT, () => {
       // eslint-disable-next-line no-console
-      console.log(`Server is running on port ${PORT}`);
+      console.log(`Server started on port ${PORT}`);
     });
   })
   .catch((err) => {
     // eslint-disable-next-line no-console
-    console.error('Mongo connection error', err);
-    process.exit(1);
+    console.error('Mongo connection error:', err);
+    // всё равно запускаем сервер, чтобы не было 502
+    app.listen(PORT, () => {
+      // eslint-disable-next-line no-console
+      console.log(`Server started on port ${PORT} WITHOUT Mongo`);
+    });
   });
