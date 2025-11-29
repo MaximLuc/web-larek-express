@@ -4,6 +4,6 @@ import { validateCreateOrder } from '../middlewares/validations';
 
 const router = Router();
 
-router.post('./order', validateCreateOrder, createOrder);
+router.post('/order', validateCreateOrder, createOrder);
 
 export default router;

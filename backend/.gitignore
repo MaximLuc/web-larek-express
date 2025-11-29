@@ -19,5 +19,5 @@ dist
 temp
 .env
 
-public/temp/
-images
+*.png
+*.svg

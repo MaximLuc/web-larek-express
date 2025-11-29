@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { Error as MongooseError } from 'mongoose';
+import ConflictError from '../errors/conflict-error';
 import BadRequestError from '../errors/bad-request-error';
 import Product from '../models/product';
 
@@ -28,7 +29,7 @@ const createProduct = (req: Request, res: Response, next: NextFunction) => {
       }
 
       if (error instanceof Error && error.message.includes('E11000')) {
-        return next(new BadRequestError('Товар с таким названием уже существует'));
+        return next(new ConflictError('Товар с таким названием уже существует'));
       }
 
       return next(error);
