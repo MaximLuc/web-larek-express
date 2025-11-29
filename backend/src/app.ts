@@ -8,6 +8,7 @@ import errorHandler from './middlewares/error-handler';
 import routes from './routes/index';
 import { errorLogger, requestLogger } from './middlewares/logger';
 
+const MONGO_URL = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/weblarek';
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -24,8 +25,14 @@ app.use(errorLogger);
 app.use(celebrateErrors());
 
 app.use(errorHandler);
-mongoose.connect('mongodb://127.0.0.1:27017/weblarek');
-
-app.listen(3000, () => {
-  console.warn('listen on port 3000');
-});
+mongoose.connect(MONGO_URL)
+  .then(() => {
+    console.log('Mongo connected');
+    app.listen(3000, () => {
+      console.log(`Server is running on port ${3000}`);
+    });
+  })
+  .catch((err) => {
+    console.error('Mongo connection error', err);
+    process.exit(1);
+  });
